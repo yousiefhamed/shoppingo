@@ -7,15 +7,23 @@ export default function ProductsContainer() {
   const { products, addToCart, addToWishlist, wishlistItems } =
     useProductContext();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (products.length > 0) {
-      setLoading(false);
+    if (products.length === 0) {
+      setError("No products found");
+    } else {
+      setError(null);
     }
+    setLoading(false);
   }, [products]);
 
   if (loading) {
     return <div>Loading products...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
   return (
